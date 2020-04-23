@@ -1,3 +1,6 @@
+part of dart_coco.reporter;
+
+final MAIN_CSS = """
 body, td {
     font-family: sans-serif;
     font-size: 10pt;
@@ -286,3 +289,4 @@ td {
     font-size: 16px;
     font-weight: bolder;
 }
+""";

@@ -1,3 +1,6 @@
+part of dart_coco.reporter;
+
+final REPORT_TEMPLATE = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,3 +36,4 @@
 
 </body>
 </html>
+""";

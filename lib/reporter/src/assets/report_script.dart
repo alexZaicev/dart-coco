@@ -1,12 +1,7 @@
-(function () {
+part of dart_coco.reporter;
 
-    /**
-     * Sets the initial sorting derived from the hash.
-     *
-     * @param linkelementids
-     *          list of element ids to search for links to add sort inidcator
-     *          hash links
-     */
+final REPORT_SCRIPT = """
+(function () {
     function initialSort(linkelementids) {
         window.linkelementids = linkelementids;
         let hash = window.location.hash;
@@ -25,22 +20,13 @@
                 if (header) {
                     sortColumn(header, false);
                 }
-                return
             }
         }
     }
-
-    /**
-     * Sorts the columns with the given header dependening on the current sort state.
-     */
     function toggleSort(header) {
-        let sortup = header.className.indexOf('down ') == 0;
+        let sortup = header.className.indexOf('down ') === 0;
         sortColumn(header, sortup);
     }
-
-    /**
-     * Sorts the columns with the given header in the given direction.
-     */
     function sortColumn(header, sortup) {
         let table = header.parentNode.parentNode.parentNode;
         let body = table.tBodies[0];
@@ -73,10 +59,6 @@
 
         setHash(hash);
     }
-
-    /**
-     * Adds the sort indicator as a hash to the document URL and all links.
-     */
     function setHash(hash) {
         window.document.location.hash = hash;
         ids = window.linkelementids;
@@ -84,10 +66,6 @@
             setHashOnAllLinks(document.getElementById(ids[i]), hash);
         }
     }
-
-    /**
-     * Extend all links within the given tag with the given hash.
-     */
     function setHashOnAllLinks(tag, hash) {
         links = tag.getElementsByTagName("a");
         for (let i = 0; i < links.length; i++) {
@@ -100,10 +78,6 @@
             a.href = href + "#" + hash;
         }
     }
-
-    /**
-     * Calculates the position of a element within its parent.
-     */
     function getNodePosition(element) {
         let pos = -1;
         while (element) {
@@ -112,17 +86,13 @@
         }
         return pos;
     }
-
-    /**
-     * Remove the sorting indicator style from all headers.
-     */
     function resetSortedStyle(table) {
         for (let c = table.tHead.firstChild.firstChild; c; c = c.nextSibling) {
             if (c.className) {
-                if (c.className.indexOf('down ') == 0) {
+                if (c.className.indexOf('down ') === 0) {
                     c.className = c.className.slice(5);
                 }
-                if (c.className.indexOf('up ') == 0) {
+                if (c.className.indexOf('up ') === 0) {
                     c.className = c.className.slice(3);
                 }
             }
@@ -133,3 +103,4 @@
     window['toggleSort'] = toggleSort;
 
 })();
+""";

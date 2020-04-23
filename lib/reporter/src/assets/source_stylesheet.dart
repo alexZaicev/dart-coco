@@ -1,3 +1,6 @@
+part of dart_coco.reporter;
+
+final SOURCE_CSS = """
 .ano {
     color: lightseagreen;
     font-style: italic;
@@ -47,3 +50,4 @@
 .dec {
     color: #606;
 }
+""";
