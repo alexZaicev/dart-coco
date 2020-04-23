@@ -3,16 +3,19 @@ import 'dart:io';
 import 'package:args/args.dart';
 import 'package:dart_coco/dart_coco.dart';
 import 'package:glob/glob.dart';
+import 'package:path/path.dart' as p;
 
 final _logger = Logger('Dart-CoCo');
 const String DEFAULT_ROOT = 'lib';
 const String DEFAULT_OUT = 'report';
+final String DEFAULT_LCOV = 'coverage${p.separator}lcov.info';
 
 Future<void> main(List<String> args) async {
   var parser = new ArgParser();
   parser.addOption('output', abbr: 'o', defaultsTo: DEFAULT_OUT, help: 'Generated report output location');
   parser.addOption('root', abbr: 'r', defaultsTo: DEFAULT_ROOT, help: 'Root path from which all dart files will be analyzed');
   parser.addOption('lcov',
+      defaultsTo: DEFAULT_LCOV,
       help: 'Path to [lcov.info] file. If file is provided, report will include coverage data collected inside LCOV file');
   parser.addFlag('verbose', abbr: 'v', help: 'Enable debug logging');
   parser.addFlag('help', abbr: 'h', help: 'Print out help page for Dart-CoCo');
@@ -64,7 +67,8 @@ Future<void> _run(final ArgResults args) async {
 
   // run lcov parser
   LcovData lcovData;
-  if (args['lcov'] != null) {
+
+  if (args.wasParsed('lcov') || File(DEFAULT_LCOV).existsSync()) {
     _logger.i('Parsing LCOV coverage report...');
     final lcovParser = LcovParser();
     final lcov = await _readFile(args['lcov']);
@@ -101,6 +105,7 @@ Future<String> _readFile(final String lcovPath) {
   if (!lcov.existsSync()) {
     throw FileSystemException("Lcov data file not found in provided path [$lcovPath]");
   }
+  _logger.i('Parsing LCOV file [$lcovPath]');
   return lcov.readAsString();
 }
 
