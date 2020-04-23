@@ -17,10 +17,7 @@ From command line execute:
 ```
 flutter pub run dart_coco --html
 ```
-If you want to include coverage data from `flutter test --coverage`, pass the path of `lcov.info` file:
-```
-flutter pub run dart_coco --html --lcov coverage/lcov.info
-```
+If you run `flutter test --coverage` before executing Dart-CoCo, tool will include coverage data gathered inside `coverage/lcov.info`
 
 #####Directly from GitHub clone:
 
@@ -29,7 +26,7 @@ git clone https://github.com/alexZaicev/dart-coco.git
 cd dart-coco
 pub get
 
-dart bin/dart_coco.dart --html -r path/to/lib -o report
+dart bin/dart_coco.dart --html -r path/to/lib -o report --lcov path/to/lcov.info
 ```
 
 ## Options
