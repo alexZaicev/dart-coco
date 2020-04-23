@@ -1,9 +1,9 @@
 part of dart_coco.reporter;
 
 class JsonReporter extends Reporter {
-  static final Logger _logger = Logger('JsonReporter');
-
   JsonReporter(final Directory output, final String root) : super(output, root);
+
+  static final Logger _logger = Logger('JsonReporter');
 
   @override
   Future<void> generateReport(final ReportData data) async {

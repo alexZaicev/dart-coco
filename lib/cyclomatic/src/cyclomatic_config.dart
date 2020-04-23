@@ -4,7 +4,26 @@ part of dart_coco.cyclomatic;
 /// Configuration for Cyclomatic Complexity calculation
 ///
 class CyclomaticConfig {
-  static final List<String> CYCLOMATIC_CONFIG_OPTIONS = [
+  CyclomaticConfig._(this.addedComplexityByControlFlowType);
+
+  factory CyclomaticConfig._fromBuilder(CyclomaticConfigBuilder builder) {
+    final m = <String, int>{
+      'assertStatement': builder._useAssertStatement ? 1 : 0,
+      'blockFunctionBody': builder._useBlockFunctionBody ? 1 : 0,
+      'catchClause': builder._useCatchClause ? 1 : 0,
+      'conditionalExpression': builder._useConditionalExpression ? 1 : 0,
+      'forEachStatement': builder._useForEachStatement ? 1 : 0,
+      'forStatement': builder._useForStatement ? 1 : 0,
+      'ifStatement': builder._useIfStatement ? 1 : 0,
+      'switchDefault': builder._useSwitchDefault ? 1 : 0,
+      'switchCase': builder._useSwitchCase ? 1 : 0,
+      'whileStatement': builder._useWhileStatement ? 1 : 0,
+      'yieldStatement': builder._useYieldStatement ? 1 : 0
+    };
+    return CyclomaticConfig._(MapBuilder<String, int>(m).build());
+  }
+
+  static final CYCLOMATIC_CONFIG_OPTIONS = <String>[
     'assertStatement',
     'blockFunctionBody',
     'catchClause',
@@ -20,19 +39,15 @@ class CyclomaticConfig {
 
   final BuiltMap<String, int> addedComplexityByControlFlowType;
 
-  int get assertStatement =>
-      addedComplexityByControlFlowType['assertStatement'];
+  int get assertStatement => addedComplexityByControlFlowType['assertStatement'];
 
-  int get blockFunctionBody =>
-      addedComplexityByControlFlowType['blockFunctionBody'];
+  int get blockFunctionBody => addedComplexityByControlFlowType['blockFunctionBody'];
 
   int get catchClause => addedComplexityByControlFlowType['catchClause'];
 
-  int get conditionalExpression =>
-      addedComplexityByControlFlowType['conditionalExpression'];
+  int get conditionalExpression => addedComplexityByControlFlowType['conditionalExpression'];
 
-  int get forEachStatement =>
-      addedComplexityByControlFlowType['forEachStatement'];
+  int get forEachStatement => addedComplexityByControlFlowType['forEachStatement'];
 
   int get forStatement => addedComplexityByControlFlowType['forStatement'];
 
@@ -45,25 +60,6 @@ class CyclomaticConfig {
   int get whileStatement => addedComplexityByControlFlowType['whileStatement'];
 
   int get yieldStatement => addedComplexityByControlFlowType['yieldStatement'];
-
-  CyclomaticConfig._(this.addedComplexityByControlFlowType);
-
-  factory CyclomaticConfig._fromBuilder(CyclomaticConfigBuilder builder) {
-    Map m = {
-      'assertStatement': builder._useAssertStatement ? 1 : 0,
-      'blockFunctionBody': builder._useBlockFunctionBody ? 1 : 0,
-      'catchClause': builder._useCatchClause ? 1 : 0,
-      'conditionalExpression': builder._useConditionalExpression ? 1 : 0,
-      'forEachStatement': builder._useForEachStatement ? 1 : 0,
-      'forStatement': builder._useForStatement ? 1 : 0,
-      'ifStatement': builder._useIfStatement ? 1 : 0,
-      'switchDefault': builder._useSwitchDefault ? 1 : 0,
-      'switchCase': builder._useSwitchCase ? 1 : 0,
-      'whileStatement': builder._useWhileStatement ? 1 : 0,
-      'yieldStatement': builder._useYieldStatement ? 1 : 0
-    };
-    return CyclomaticConfig._(MapBuilder<String, int>(m).build());
-  }
 
   static CyclomaticConfigBuilder getBuilder() {
     return CyclomaticConfigBuilder();
@@ -140,7 +136,7 @@ class CyclomaticConfigBuilder {
 /// complexity.
 ///
 final CyclomaticConfig DEFAULT_CYCLOMATIC_CONFIG = () {
-  CyclomaticConfigBuilder builder = CyclomaticConfig.getBuilder()
+  final builder = CyclomaticConfig.getBuilder()
     ..useAssertStatement()
     ..useBlockFunctionBody()
     ..useCatchClause()

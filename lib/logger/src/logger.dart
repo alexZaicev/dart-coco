@@ -3,7 +3,9 @@ part of dart_coco.logger;
 enum LogLevel { ERROR, WARN, INFO, DEBUG }
 
 class Logger {
-  String _tag;
+  Logger(final String tag) : _tag = tag;
+
+  final String _tag;
 
   static LogLevel logLevel = LogLevel.INFO;
 
@@ -11,17 +13,8 @@ class Logger {
     LogLevel.ERROR: [LogLevel.ERROR],
     LogLevel.WARN: [LogLevel.ERROR, LogLevel.WARN],
     LogLevel.INFO: [LogLevel.ERROR, LogLevel.WARN, LogLevel.INFO],
-    LogLevel.DEBUG: [
-      LogLevel.ERROR,
-      LogLevel.WARN,
-      LogLevel.INFO,
-      LogLevel.DEBUG
-    ],
+    LogLevel.DEBUG: [LogLevel.ERROR, LogLevel.WARN, LogLevel.INFO, LogLevel.DEBUG],
   };
-
-  Logger(final String tag) {
-    _tag = tag;
-  }
 
   void e(final String msg) {
     _print(LogLevel.ERROR, msg);
@@ -41,8 +34,7 @@ class Logger {
 
   void _print(final LogLevel lvl, final String msg) {
     if (_allowed[logLevel].contains(lvl)) {
-      print(
-          '${_timestamp()}\t --- [${EnumToString.parse(lvl)}] --- [$_tag] --- $msg');
+      print('${_timestamp()}\t --- [${EnumToString.parse(lvl)}] --- [$_tag] --- $msg');
     }
   }
 

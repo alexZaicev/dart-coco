@@ -1,6 +1,6 @@
 part of dart_coco.reporter;
 
-final REPORT_SCRIPT = """
+const REPORT_SCRIPT = '''
 (function () {
     function initialSort(linkelementids) {
         window.linkelementids = linkelementids;
@@ -103,4 +103,4 @@ final REPORT_SCRIPT = """
     window['toggleSort'] = toggleSort;
 
 })();
-""";
+''';

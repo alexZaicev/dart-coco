@@ -1,6 +1,8 @@
 part of dart_coco.reporter;
 
-class ReportData extends Serializable {
+class ReportData extends Serializable<ReportData> {
+  ReportData({this.timestamp, this.summary, this.packages});
+
   String timestamp;
   ReportSummary summary;
   Map<String, ReportPackage> packages;
@@ -15,8 +17,6 @@ class ReportData extends Serializable {
     }
     return m;
   }
-
-  ReportData({this.timestamp, this.summary, this.packages});
 
   @override
   Map<String, dynamic> toMap() {
@@ -35,7 +35,16 @@ class ReportData extends Serializable {
   }
 }
 
-class ReportPackage implements Serializable {
+class ReportPackage implements Serializable<ReportPackage> {
+  ReportPackage({
+    this.complexity = 0,
+    this.linesTotal = 0,
+    this.linesCovered = 0,
+    this.branchesTotal = 0,
+    this.branchesCovered = 0,
+    this.classes,
+  });
+
   int complexity;
   int linesTotal;
   int linesCovered;
@@ -53,15 +62,6 @@ class ReportPackage implements Serializable {
     }
     return m;
   }
-
-  ReportPackage({
-    this.complexity = 0,
-    this.linesTotal = 0,
-    this.linesCovered = 0,
-    this.branchesTotal = 0,
-    this.branchesCovered = 0,
-    this.classes,
-  });
 
   @override
   Map<String, dynamic> toMap() {
@@ -83,15 +83,7 @@ class ReportPackage implements Serializable {
   }
 }
 
-class ReportFile implements Serializable {
-  int complexity;
-  int linesTotal;
-  int linesCovered;
-  Map<int, int> linesHits;
-  int branchesTotal;
-  int branchesCovered;
-  Map<String, ReportMethod> methods;
-
+class ReportFile implements Serializable<ReportFile> {
   ReportFile(
       {this.complexity = 0,
       this.linesTotal = 0,
@@ -100,6 +92,14 @@ class ReportFile implements Serializable {
       this.branchesTotal = 0,
       this.branchesCovered = 0,
       this.methods});
+
+  int complexity;
+  int linesTotal;
+  int linesCovered;
+  Map<int, int> linesHits;
+  int branchesTotal;
+  int branchesCovered;
+  Map<String, ReportMethod> methods;
 
   @override
   Map<String, dynamic> toMap() {
@@ -128,10 +128,10 @@ class ReportFile implements Serializable {
   }
 }
 
-class ReportMethod implements Serializable {
-  int complexity;
-
+class ReportMethod implements Serializable<ReportMethod> {
   ReportMethod({this.complexity});
+
+  int complexity;
 
   @override
   Map<String, dynamic> toMap() => <String, dynamic>{
@@ -139,19 +139,14 @@ class ReportMethod implements Serializable {
       };
 }
 
-class ReportSummary implements Serializable {
+class ReportSummary implements Serializable<ReportSummary> {
+  ReportSummary({this.complexity = 0, this.linesTotal = 0, this.linesCovered = 0, this.branchesTotal = 0, this.branchesCovered = 0});
+
   int complexity;
   int linesTotal;
   int linesCovered;
   int branchesTotal;
   int branchesCovered;
-
-  ReportSummary(
-      {this.complexity = 0,
-      this.linesTotal = 0,
-      this.linesCovered = 0,
-      this.branchesTotal = 0,
-      this.branchesCovered = 0});
 
   @override
   Map<String, dynamic> toMap() => <String, dynamic>{

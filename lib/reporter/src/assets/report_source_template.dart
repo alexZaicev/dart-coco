@@ -1,6 +1,6 @@
 part of dart_coco.reporter;
 
-final REPORT_SOURCE_TEMPLATE = """
+const REPORT_SOURCE_TEMPLATE = '''
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,4 +22,4 @@ final REPORT_SOURCE_TEMPLATE = """
      style="z-index: 2147483647 !important; text-transform: none !important; position: fixed;"></div>
 </body>
 </html>
-""";
+''';

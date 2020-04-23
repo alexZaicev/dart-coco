@@ -3,10 +3,10 @@ library dart_coco.cyclomatic.test;
 import 'package:dart_coco/cyclomatic/cyclomatic.dart';
 import 'package:test/test.dart';
 
-main() {
+Future main() async {
   group('Control flow AST visitor', () {
     test('Complexity increment with known config option', () {
-      var visitor = new ControlFlowVisitor(DEFAULT_CYCLOMATIC_CONFIG);
+      final visitor = ControlFlowVisitor(DEFAULT_CYCLOMATIC_CONFIG);
       expect(visitor.complexity, 1);
       expect(() {
         visitor.increaseComplexity('ifStatement');
@@ -15,7 +15,7 @@ main() {
     });
 
     test('Complexity increment with unknown config option', () {
-      var visitor = new ControlFlowVisitor(DEFAULT_CYCLOMATIC_CONFIG);
+      final visitor = ControlFlowVisitor(DEFAULT_CYCLOMATIC_CONFIG);
       expect(() {
         visitor.increaseComplexity('unknownoption');
       }, throwsArgumentError);

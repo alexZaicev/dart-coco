@@ -14,7 +14,7 @@ class Assets {
 
   static String getResource(final String name) {
     if (!_assetResources.containsKey(name)) {
-      throw new ArgumentError(
+      throw ArgumentError(
           'Resource [$name] in not present in dart-coco available asset set');
     }
     return _assetResources[name];

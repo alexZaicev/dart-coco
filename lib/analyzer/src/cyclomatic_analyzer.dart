@@ -1,13 +1,13 @@
 part of dart_coco.analyzer;
 
 class CyclomaticAnalysisRecorder extends AnalysisRecorder {
+  CyclomaticAnalysisRecorder() : _records = <Map<String, dynamic>>[];
+
   Map<String, dynamic> _activeRecordGroup;
 
   bool get _hasStartedGroup => _activeRecordGroup != null;
 
   final List<Map<String, dynamic>> _records;
-
-  CyclomaticAnalysisRecorder() : _records = List<Map<String, dynamic>>();
 
   @override
   bool canRecord(String recordName) {
@@ -23,14 +23,15 @@ class CyclomaticAnalysisRecorder extends AnalysisRecorder {
   @override
   void startRecordGroup(String groupName) {
     if (_hasStartedGroup) {
-      throw StateError(
-          'Cannot start a group while another one is started. Use `endRecordGroup` to close the opened one.');
+      throw StateError('Cannot start a group while another one is started. Use `endRecordGroup` to close the opened one.');
     }
     if (groupName == null) {
       throw ArgumentError.notNull('groupName');
     }
-    Map<String, dynamic> recordGroup = Map<String, dynamic>();
-    _records.add({groupName: recordGroup});
+    final recordGroup = <String, dynamic>{};
+    _records.add(<String, dynamic>{
+      groupName: recordGroup,
+    });
     _activeRecordGroup = recordGroup;
   }
 
@@ -40,10 +41,9 @@ class CyclomaticAnalysisRecorder extends AnalysisRecorder {
   }
 
   @override
-  void record(String recordName, value) {
+  void record(final String recordName, final dynamic value) {
     if (!_hasStartedGroup) {
-      throw StateError(
-          'No record groups have been started. Use `startRecordGroup` before `record`');
+      throw StateError('No record groups have been started. Use `startRecordGroup` before `record`');
     }
     if (recordName == null) {
       throw ArgumentError.notNull('recordName');
@@ -58,7 +58,7 @@ class CyclomaticAnalyzer extends Analyzer<CyclomaticAnalysisRecorder> {
   @override
   void runAnalysis(String filePath, CyclomaticAnalysisRecorder recorder) {
     _recorder = recorder;
-    var declarations = _getDeclarations(filePath);
+    final declarations = _getDeclarations(filePath);
     if (declarations.isNotEmpty) {
       recorder.startRecordGroup(filePath);
       _recordDeclarationNamesFor(declarations);
@@ -68,8 +68,7 @@ class CyclomaticAnalyzer extends Analyzer<CyclomaticAnalysisRecorder> {
   }
 
   BuiltList<ScopedDeclaration> _getDeclarations(String filePath) {
-    final compUnit =
-        parseFile(path: filePath, featureSet: FeatureSet.fromEnableFlags([]));
+    final compUnit = parseFile(path: filePath, featureSet: FeatureSet.fromEnableFlags([]));
     final callableVisitor = CallableAstVisitor();
     compUnit.unit.visitChildren(callableVisitor);
     return callableVisitor.declarations;
@@ -90,11 +89,7 @@ class CyclomaticAnalyzer extends Analyzer<CyclomaticAnalysisRecorder> {
   }
 
   void _recordDeclarationNamesFor(Iterable<ScopedDeclaration> declarations) {
-    _recorder.record(
-        "callables",
-        declarations
-            .map((ScopedDeclaration dec) => _getQualifiedName(dec))
-            .toList(growable: false));
+    _recorder.record('callables', declarations.map((ScopedDeclaration dec) => _getQualifiedName(dec)).toList(growable: false));
   }
 
   void _recordDeclarationComplexity(ScopedDeclaration dec, int complexity) {
@@ -102,11 +97,11 @@ class CyclomaticAnalyzer extends Analyzer<CyclomaticAnalysisRecorder> {
   }
 
   String _getQualifiedName(ScopedDeclaration dec) {
-    Declaration declaration = dec.declaration;
+    final declaration = dec.declaration;
     if (declaration is FunctionDeclaration) {
       return declaration.name.toString();
     } else if (declaration is MethodDeclaration) {
-      return "${dec.enclosingClass.name}.${declaration.name}";
+      return '${dec.enclosingClass.name}.${declaration.name}';
     }
     return null;
   }
@@ -117,8 +112,7 @@ class CyclomaticAnalyzer extends Analyzer<CyclomaticAnalysisRecorder> {
 }
 
 class CyclomaticAnalysisRunner extends AnalysisRunner {
-  CyclomaticAnalysisRunner(final AnalysisRecorder recorder,
-      final Analyzer analyzer, final List<String> filePaths)
+  CyclomaticAnalysisRunner(final AnalysisRecorder recorder, final Analyzer analyzer, final List<String> filePaths)
       : super(recorder, analyzer, filePaths);
 
   @override
@@ -140,11 +134,10 @@ class CyclomaticAnalysisRunner extends AnalysisRunner {
         final Map<String, AnalysisMethod> methods = {};
         for (final callable in data[file]['callables']) {
           complexity += data[file][callable];
-          final method = callable.split('.').last;
+          final String method = callable.split('.').last;
           methods[method] = AnalysisMethod(complexity: data[file][callable]);
         }
-        final fullName =
-            p.join('lib', file.replaceAll('$root${p.separator}', ''));
+        final fullName = p.join('lib', file.replaceAll('$root${p.separator}', ''));
         final clazz = fullName.split(p.separator).last;
         String package = fullName.replaceAll('${p.separator}$clazz', '');
         // check if some files are in root
@@ -153,10 +146,8 @@ class CyclomaticAnalysisRunner extends AnalysisRunner {
           package = 'lib';
         }
 
-        packages[package] ??=
-            AnalysisPackage(classes: <String, AnalysisFile>{});
-        packages[package].classes[clazz] =
-            AnalysisFile(complexity: complexity, methods: methods);
+        packages[package] ??= AnalysisPackage(classes: <String, AnalysisFile>{});
+        packages[package].classes[clazz] = AnalysisFile(complexity: complexity, methods: methods);
         packages[package].complexity += complexity;
       }
     }
@@ -165,14 +156,13 @@ class CyclomaticAnalysisRunner extends AnalysisRunner {
     for (final p in packages.values.toList(growable: false)) {
       summary.complexity += p.complexity;
     }
-    return AnalysisData(
-        timestamp: DateTime.now().toUtc().toIso8601String(),
-        summary: summary,
-        packages: packages);
+    return AnalysisData(timestamp: DateTime.now().toUtc().toIso8601String(), summary: summary, packages: packages);
   }
 }
 
 class AnalysisData {
+  AnalysisData({this.timestamp, this.summary, this.packages});
+
   String timestamp;
   AnalysisSummary summary;
   Map<String, AnalysisPackage> packages;
@@ -187,11 +177,11 @@ class AnalysisData {
     }
     return m;
   }
-
-  AnalysisData({this.timestamp, this.summary, this.packages});
 }
 
 class AnalysisPackage {
+  AnalysisPackage({this.complexity = 0, this.classes});
+
   int complexity;
   Map<String, AnalysisFile> classes;
 
@@ -205,25 +195,23 @@ class AnalysisPackage {
     }
     return m;
   }
-
-  AnalysisPackage({this.complexity = 0, this.classes});
 }
 
 class AnalysisFile {
+  AnalysisFile({this.complexity = 0, this.methods});
+
   int complexity;
   Map<String, AnalysisMethod> methods;
-
-  AnalysisFile({this.complexity = 0, this.methods});
 }
 
 class AnalysisMethod {
-  int complexity;
-
   AnalysisMethod({this.complexity});
+
+  int complexity;
 }
 
 class AnalysisSummary {
-  int complexity;
-
   AnalysisSummary({this.complexity = 0});
+
+  int complexity;
 }

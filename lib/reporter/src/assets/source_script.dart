@@ -1,6 +1,6 @@
 part of dart_coco.reporter;
 
-final SOURCE_SCRIPT = """
+const SOURCE_SCRIPT = '''
 window['PR_SHOULD_USE_CONTINUATION'] = true;
 window['PR_TAB_WIDTH'] = 8;
 window['PR_normalizedHtml'] = window['PR'] = window['prettyPrintOne'] = window['prettyPrint'] = void 0;
@@ -1174,4 +1174,4 @@ function isRawContent(node) {
         'PR_TYPE': PR_TYPE
     };    
 })();
-""";
+''';

@@ -1,10 +1,10 @@
 part of dart_coco.cyclomatic;
 
 class ScopedDeclaration {
+  ScopedDeclaration(this.declaration, this.enclosingClass);
+
   final Declaration declaration;
   final ClassDeclaration enclosingClass;
-
-  ScopedDeclaration(this.declaration, this.enclosingClass);
 }
 
 ///
@@ -15,29 +15,28 @@ class CallableAstVisitor extends RecursiveAstVisitor<Object> {
 
   ClassDeclaration enclosingClass;
 
-  BuiltList<ScopedDeclaration> get declarations =>
-      BuiltList<ScopedDeclaration>(_declarations);
+  BuiltList<ScopedDeclaration> get declarations => BuiltList<ScopedDeclaration>(_declarations);
 
   void registerDeclaration(Declaration node) {
     _declarations.add(ScopedDeclaration(node, enclosingClass));
   }
 
   @override
-  visitFunctionDeclaration(FunctionDeclaration node) {
+  Object visitFunctionDeclaration(FunctionDeclaration node) {
     registerDeclaration(node);
     super.visitFunctionDeclaration(node);
     return null;
   }
 
   @override
-  visitMethodDeclaration(MethodDeclaration node) {
+  Object visitMethodDeclaration(MethodDeclaration node) {
     registerDeclaration(node);
     super.visitMethodDeclaration(node);
     return null;
   }
 
   @override
-  visitClassDeclaration(ClassDeclaration node) {
+  Object visitClassDeclaration(ClassDeclaration node) {
     enclosingClass = node;
     super.visitClassDeclaration(node);
     enclosingClass = null;

@@ -33,7 +33,7 @@ bool _methodDeclarationFilter(ScopedDeclaration dec) {
   return dec.declaration is MethodDeclaration;
 }
 
-main() {
+Future main() async {
   group('Callable AST visitor', () {
     ParseStringResult parseStringResult;
     CompilationUnit compUnit;
@@ -53,15 +53,11 @@ main() {
     });
 
     test('Function found', () {
-      expect(
-          callableVisitor.declarations.where(_functionDeclarationFilter).length,
-          greaterThan(0));
+      expect(callableVisitor.declarations.where(_functionDeclarationFilter).length, greaterThan(0));
     });
 
     test('Method found', () {
-      expect(
-          callableVisitor.declarations.where(_methodDeclarationFilter).length,
-          greaterThan(0));
+      expect(callableVisitor.declarations.where(_methodDeclarationFilter).length, greaterThan(0));
     });
 
     test('Method found', () {
