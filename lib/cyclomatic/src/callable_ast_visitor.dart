@@ -15,7 +15,8 @@ class CallableAstVisitor extends RecursiveAstVisitor<Object> {
 
   ClassDeclaration enclosingClass;
 
-  BuiltList<ScopedDeclaration> get declarations => BuiltList<ScopedDeclaration>(_declarations);
+  BuiltList<ScopedDeclaration> get declarations =>
+      BuiltList<ScopedDeclaration>(_declarations);
 
   void registerDeclaration(Declaration node) {
     _declarations.add(ScopedDeclaration(node, enclosingClass));

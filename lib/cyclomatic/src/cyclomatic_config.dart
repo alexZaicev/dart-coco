@@ -1,37 +1,38 @@
 part of dart_coco.cyclomatic;
 
 ///
-/// Available options in CyclomaticConfig
-///
-const List<String> CYCLOMATIC_CONFIG_OPTIONS = const [
-  'assertStatement',
-  'blockFunctionBody',
-  'catchClause',
-  'conditionalExpression',
-  'forEachStatement',
-  'forStatement',
-  'ifStatement',
-  'switchDefault',
-  'switchCase',
-  'whileStatement',
-  'yieldStatement'
-];
-
-///
 /// Configuration for Cyclomatic Complexity calculation
 ///
 class CyclomaticConfig {
+  static final List<String> CYCLOMATIC_CONFIG_OPTIONS = [
+    'assertStatement',
+    'blockFunctionBody',
+    'catchClause',
+    'conditionalExpression',
+    'forEachStatement',
+    'forStatement',
+    'ifStatement',
+    'switchDefault',
+    'switchCase',
+    'whileStatement',
+    'yieldStatement'
+  ];
+
   final BuiltMap<String, int> addedComplexityByControlFlowType;
 
-  int get assertStatement => addedComplexityByControlFlowType['assertStatement'];
+  int get assertStatement =>
+      addedComplexityByControlFlowType['assertStatement'];
 
-  int get blockFunctionBody => addedComplexityByControlFlowType['blockFunctionBody'];
+  int get blockFunctionBody =>
+      addedComplexityByControlFlowType['blockFunctionBody'];
 
   int get catchClause => addedComplexityByControlFlowType['catchClause'];
 
-  int get conditionalExpression => addedComplexityByControlFlowType['conditionalExpression'];
+  int get conditionalExpression =>
+      addedComplexityByControlFlowType['conditionalExpression'];
 
-  int get forEachStatement => addedComplexityByControlFlowType['forEachStatement'];
+  int get forEachStatement =>
+      addedComplexityByControlFlowType['forEachStatement'];
 
   int get forStatement => addedComplexityByControlFlowType['forStatement'];
 
@@ -61,11 +62,11 @@ class CyclomaticConfig {
       'whileStatement': builder._useWhileStatement ? 1 : 0,
       'yieldStatement': builder._useYieldStatement ? 1 : 0
     };
-    return new CyclomaticConfig._(new MapBuilder<String, int>(m).build());
+    return CyclomaticConfig._(MapBuilder<String, int>(m).build());
   }
 
   static CyclomaticConfigBuilder getBuilder() {
-    return new CyclomaticConfigBuilder();
+    return CyclomaticConfigBuilder();
   }
 }
 
@@ -127,7 +128,7 @@ class CyclomaticConfigBuilder {
   }
 
   CyclomaticConfig build() {
-    return new CyclomaticConfig._fromBuilder(this);
+    return CyclomaticConfig._fromBuilder(this);
   }
 }
 

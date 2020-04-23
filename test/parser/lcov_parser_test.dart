@@ -70,14 +70,33 @@ Future _testLcov1() async {
   expect(data.packages['lib${p.separator}package1'].classes, isNotNull);
   expect(data.packages['lib${p.separator}package1'].classes.length, 1);
 
-  expect(data.packages['lib${p.separator}package1'].classes['file.dart'], isNotNull);
-  expect(data.packages['lib${p.separator}package1'].classes['file.dart'].linesTotal, 12);
-  expect(data.packages['lib${p.separator}package1'].classes['file.dart'].linesCovered, 6);
-  expect(data.packages['lib${p.separator}package1'].classes['file.dart'].branchesTotal, 0);
-  expect(data.packages['lib${p.separator}package1'].classes['file.dart'].branchesCovered, 0);
-  expect(data.packages['lib${p.separator}package1'].classes['file.dart'].linesHits, isNotNull);
-  expect(data.packages['lib${p.separator}package1'].classes['file.dart'].linesHits.length, 12);
-  for (final num in data.packages['lib${p.separator}package1'].classes['file.dart'].linesHits.keys) {
+  expect(data.packages['lib${p.separator}package1'].classes['file.dart'],
+      isNotNull);
+  expect(
+      data.packages['lib${p.separator}package1'].classes['file.dart']
+          .linesTotal,
+      12);
+  expect(
+      data.packages['lib${p.separator}package1'].classes['file.dart']
+          .linesCovered,
+      6);
+  expect(
+      data.packages['lib${p.separator}package1'].classes['file.dart']
+          .branchesTotal,
+      0);
+  expect(
+      data.packages['lib${p.separator}package1'].classes['file.dart']
+          .branchesCovered,
+      0);
+  expect(
+      data.packages['lib${p.separator}package1'].classes['file.dart'].linesHits,
+      isNotNull);
+  expect(
+      data.packages['lib${p.separator}package1'].classes['file.dart'].linesHits
+          .length,
+      12);
+  for (final num in data.packages['lib${p.separator}package1']
+      .classes['file.dart'].linesHits.keys) {
     switch (num) {
       case 3:
       case 6:
@@ -86,7 +105,10 @@ Future _testLcov1() async {
       case 39:
       case 40:
         {
-          expect(data.packages['lib${p.separator}package1'].classes['file.dart'].linesHits[num], 0);
+          expect(
+              data.packages['lib${p.separator}package1'].classes['file.dart']
+                  .linesHits[num],
+              0);
           break;
         }
       case 4:
@@ -94,17 +116,26 @@ Future _testLcov1() async {
       case 35:
       case 36:
         {
-          expect(data.packages['lib${p.separator}package1'].classes['file.dart'].linesHits[num], 1);
+          expect(
+              data.packages['lib${p.separator}package1'].classes['file.dart']
+                  .linesHits[num],
+              1);
           break;
         }
       case 34:
         {
-          expect(data.packages['lib${p.separator}package1'].classes['file.dart'].linesHits[num], 3);
+          expect(
+              data.packages['lib${p.separator}package1'].classes['file.dart']
+                  .linesHits[num],
+              3);
           break;
         }
       case 1:
         {
-          expect(data.packages['lib${p.separator}package1'].classes['file.dart'].linesHits[num], 4);
+          expect(
+              data.packages['lib${p.separator}package1'].classes['file.dart']
+                  .linesHits[num],
+              4);
           break;
         }
       default:
@@ -115,42 +146,76 @@ Future _testLcov1() async {
   expect(data.packages['lib${p.separator}package2'].classes, isNotNull);
   expect(data.packages['lib${p.separator}package2'].classes.length, 1);
 
-  expect(data.packages['lib${p.separator}package2'].classes['file.dart'], isNotNull);
-  expect(data.packages['lib${p.separator}package2'].classes['file.dart'].linesTotal, 9);
-  expect(data.packages['lib${p.separator}package2'].classes['file.dart'].linesCovered, 7);
-  expect(data.packages['lib${p.separator}package2'].classes['file.dart'].branchesTotal, 0);
-  expect(data.packages['lib${p.separator}package2'].classes['file.dart'].branchesCovered, 0);
-  expect(data.packages['lib${p.separator}package2'].classes['file.dart'].linesHits, isNotNull);
-  expect(data.packages['lib${p.separator}package2'].classes['file.dart'].linesHits.length, 9);
-  for (final num in data.packages['lib${p.separator}package2'].classes['file.dart'].linesHits.keys) {
+  expect(data.packages['lib${p.separator}package2'].classes['file.dart'],
+      isNotNull);
+  expect(
+      data.packages['lib${p.separator}package2'].classes['file.dart']
+          .linesTotal,
+      9);
+  expect(
+      data.packages['lib${p.separator}package2'].classes['file.dart']
+          .linesCovered,
+      7);
+  expect(
+      data.packages['lib${p.separator}package2'].classes['file.dart']
+          .branchesTotal,
+      0);
+  expect(
+      data.packages['lib${p.separator}package2'].classes['file.dart']
+          .branchesCovered,
+      0);
+  expect(
+      data.packages['lib${p.separator}package2'].classes['file.dart'].linesHits,
+      isNotNull);
+  expect(
+      data.packages['lib${p.separator}package2'].classes['file.dart'].linesHits
+          .length,
+      9);
+  for (final num in data.packages['lib${p.separator}package2']
+      .classes['file.dart'].linesHits.keys) {
     switch (num) {
       case 1:
       case 4:
         {
-          expect(data.packages['lib${p.separator}package2'].classes['file.dart'].linesHits[num], 0);
+          expect(
+              data.packages['lib${p.separator}package2'].classes['file.dart']
+                  .linesHits[num],
+              0);
           break;
         }
       case 3:
       case 8:
         {
-          expect(data.packages['lib${p.separator}package2'].classes['file.dart'].linesHits[num], 1);
+          expect(
+              data.packages['lib${p.separator}package2'].classes['file.dart']
+                  .linesHits[num],
+              1);
           break;
         }
       case 2:
       case 7:
       case 9:
         {
-          expect(data.packages['lib${p.separator}package2'].classes['file.dart'].linesHits[num], 2);
+          expect(
+              data.packages['lib${p.separator}package2'].classes['file.dart']
+                  .linesHits[num],
+              2);
           break;
         }
       case 6:
         {
-          expect(data.packages['lib${p.separator}package2'].classes['file.dart'].linesHits[num], 3);
+          expect(
+              data.packages['lib${p.separator}package2'].classes['file.dart']
+                  .linesHits[num],
+              3);
           break;
         }
       case 5:
         {
-          expect(data.packages['lib${p.separator}package2'].classes['file.dart'].linesHits[num], 6);
+          expect(
+              data.packages['lib${p.separator}package2'].classes['file.dart']
+                  .linesHits[num],
+              6);
           break;
         }
       default:
@@ -158,4 +223,3 @@ Future _testLcov1() async {
     }
   }
 }
-

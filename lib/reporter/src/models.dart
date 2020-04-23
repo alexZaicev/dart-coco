@@ -146,7 +146,12 @@ class ReportSummary implements Serializable {
   int branchesTotal;
   int branchesCovered;
 
-  ReportSummary({this.complexity = 0, this.linesTotal = 0, this.linesCovered = 0, this.branchesTotal = 0, this.branchesCovered = 0});
+  ReportSummary(
+      {this.complexity = 0,
+      this.linesTotal = 0,
+      this.linesCovered = 0,
+      this.branchesTotal = 0,
+      this.branchesCovered = 0});
 
   @override
   Map<String, dynamic> toMap() => <String, dynamic>{

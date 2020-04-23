@@ -69,7 +69,10 @@ class LcovParser extends Parser {
       }
     }
 
-    return LcovData(timestamp: DateTime.now().toUtc().toIso8601String(), packages: packages, summary: summary);
+    return LcovData(
+        timestamp: DateTime.now().toUtc().toIso8601String(),
+        packages: packages,
+        summary: summary);
   }
 
   void _linesFoundAction(final String data) {
@@ -111,7 +114,8 @@ class LcovParser extends Parser {
     linesHits[lineNum] += hits;
   }
 
-  void _saveRecord(final Map<String, LcovPackage> packages, final LcovSummary summary) {
+  void _saveRecord(
+      final Map<String, LcovPackage> packages, final LcovSummary summary) {
     packages[packageName] ??= LcovPackage();
     packages[packageName].linesTotal += linesTotal;
     packages[packageName].linesCovered += linesCovered;
@@ -126,7 +130,8 @@ class LcovParser extends Parser {
     packages[packageName].classes[className].linesHits ??= {};
     for (final lineNum in linesHits.keys) {
       packages[packageName].classes[className].linesHits[lineNum] ??= 0;
-      packages[packageName].classes[className].linesHits[lineNum] += linesHits[lineNum];
+      packages[packageName].classes[className].linesHits[lineNum] +=
+          linesHits[lineNum];
     }
 
     summary.linesTotal += linesTotal;
@@ -163,7 +168,12 @@ class LcovPackage {
   int branchesCovered;
   Map<String, LcovFile> classes;
 
-  LcovPackage({this.linesTotal = 0, this.linesCovered = 0, this.branchesTotal = 0, this.branchesCovered = 0, this.classes});
+  LcovPackage(
+      {this.linesTotal = 0,
+      this.linesCovered = 0,
+      this.branchesTotal = 0,
+      this.branchesCovered = 0,
+      this.classes});
 }
 
 class LcovFile {
@@ -173,7 +183,12 @@ class LcovFile {
   int branchesTotal;
   int branchesCovered;
 
-  LcovFile({this.linesTotal = 0, this.linesCovered = 0, this.linesHits, this.branchesTotal = 0, this.branchesCovered = 0});
+  LcovFile(
+      {this.linesTotal = 0,
+      this.linesCovered = 0,
+      this.linesHits,
+      this.branchesTotal = 0,
+      this.branchesCovered = 0});
 }
 
 class LcovSummary {
@@ -182,5 +197,9 @@ class LcovSummary {
   int branchesTotal;
   int branchesCovered;
 
-  LcovSummary({this.branchesCovered = 0, this.branchesTotal = 0, this.linesCovered = 0, this.linesTotal = 0});
+  LcovSummary(
+      {this.branchesCovered = 0,
+      this.branchesTotal = 0,
+      this.linesCovered = 0,
+      this.linesTotal = 0});
 }

@@ -10,7 +10,8 @@ abstract class Reporter {
       if (Platform.isWindows) {
         PROJECT_ROOT = PROJECT_ROOT.replaceAll('/', p.separator).substring(1);
       }
-      PROJECT_ROOT = PROJECT_ROOT.replaceAll('${p.separator}bin${p.separator}dart_coco.dart', '');
+      PROJECT_ROOT = PROJECT_ROOT.replaceAll(
+          '${p.separator}bin${p.separator}dart_coco.dart', '');
     }
     return PROJECT_ROOT;
   }
@@ -30,8 +31,10 @@ abstract class Reporter {
 
   Future<void> generateReport(final ReportData data);
 
-  static ReportData generateReportData(final AnalysisData analysisData, final LcovData lcovData) {
-    final reportData = ReportData(timestamp: DateTime.now().toUtc().toIso8601String(), packages: {});
+  static ReportData generateReportData(
+      final AnalysisData analysisData, final LcovData lcovData) {
+    final reportData = ReportData(
+        timestamp: DateTime.now().toUtc().toIso8601String(), packages: {});
 
     // process analysis data
     _processAnalysisData(reportData, analysisData);
@@ -43,7 +46,8 @@ abstract class Reporter {
     return reportData;
   }
 
-  static void _processAnalysisData(final ReportData report, final AnalysisData analysis) {
+  static void _processAnalysisData(
+      final ReportData report, final AnalysisData analysis) {
     report.summary ??= ReportSummary();
     report.summary.complexity = analysis.summary.complexity;
 
@@ -61,8 +65,10 @@ abstract class Reporter {
         for (final method in ac.methods.keys) {
           final am = ac.methods[method];
           report.packages[package].classes[clazz].methods ??= {};
-          report.packages[package].classes[clazz].methods[method] ??= ReportMethod();
-          report.packages[package].classes[clazz].methods[method].complexity = am.complexity;
+          report.packages[package].classes[clazz].methods[method] ??=
+              ReportMethod();
+          report.packages[package].classes[clazz].methods[method].complexity =
+              am.complexity;
         }
       }
     }
@@ -89,8 +95,10 @@ abstract class Reporter {
         report.packages[package].classes[clazz] ??= ReportFile();
         report.packages[package].classes[clazz].linesTotal = lc.linesTotal;
         report.packages[package].classes[clazz].linesCovered = lc.linesCovered;
-        report.packages[package].classes[clazz].branchesTotal = lc.branchesTotal;
-        report.packages[package].classes[clazz].branchesCovered = lc.branchesCovered;
+        report.packages[package].classes[clazz].branchesTotal =
+            lc.branchesTotal;
+        report.packages[package].classes[clazz].branchesCovered =
+            lc.branchesCovered;
         report.packages[package].classes[clazz].linesHits = lc.linesHits;
 
         // TODO: add method coverage

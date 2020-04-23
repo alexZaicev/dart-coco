@@ -15,7 +15,8 @@ abstract class AnalysisRunner {
 
   List<String> get filePath => _filePaths;
 
-  AnalysisRunner(final AnalysisRecorder recorder, final Analyzer analyzer, final List<String> filePaths) {
+  AnalysisRunner(final AnalysisRecorder recorder, final Analyzer analyzer,
+      final List<String> filePaths) {
     this._recorder = recorder;
     this._analyzer = analyzer;
     this._filePaths = filePaths;

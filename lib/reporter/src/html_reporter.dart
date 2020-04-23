@@ -7,7 +7,8 @@ class HtmlReporter extends Reporter {
   static final String SOURCE = '<!SOURCE!>';
   static final String HEAD_LINKS = '<!HEAD_LINKS!>';
   static final String HTML_REPORT_TEMPLATE = 'report_template_v2.html';
-  static final String HTML_SOURCE_REPORT_TEMPLATE = 'report_source_template.html';
+  static final String HTML_SOURCE_REPORT_TEMPLATE =
+      'report_source_template.html';
   static final List<String> DART_LANG_KEYWORDS = [
     'typedef',
     'as',
@@ -61,7 +62,13 @@ class HtmlReporter extends Reporter {
     'sync',
     'on',
   ];
-  static final Map<String, String> HTML_NAME_CODE = {'&': '&amp;', '<': '&lt;', '>': '&gt;', '\'': '&apos;', '\"': '&quot;'};
+  static final Map<String, String> HTML_NAME_CODE = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '\'': '&apos;',
+    '\"': '&quot;'
+  };
   static final List<String> STRING_IDENTIFIERS = ['\'', '\"'];
   static final List<String> DART_LANG_PRIMITIVES = [
     'int',
@@ -130,10 +137,18 @@ class HtmlReporter extends Reporter {
   }
 
   Future<void> _placeResources() async {
-    final Directory resourceDir = Directory(p.join(outputDir.path, 'resources'));
+    final Directory resourceDir =
+        Directory(p.join(outputDir.path, 'resources'));
     await resourceDir.create();
     _logger.d("Resource directory created");
-    final resources = ['main.css', 'source.css', 'report.js', 'source.js', 'redbar.svg', 'greenbar.svg'];
+    final resources = [
+      'main.css',
+      'source.css',
+      'report.js',
+      'source.js',
+      'redbar.svg',
+      'greenbar.svg'
+    ];
 
     for (final res in resources) {
       _logger.d('Copying resource file [$res]...');
@@ -160,11 +175,14 @@ class HtmlReporter extends Reporter {
 
         final String headLinks = _placeHeadLink(DisplayType.CLASS);
         _logger.d("Index head link generated:\n$headLinks");
-        final String tableBody = _body(data, DisplayType.CLASS, package: package, clazz: clazz);
+        final String tableBody =
+            _body(data, DisplayType.CLASS, package: package, clazz: clazz);
         _logger.d("Table body generated:\n$tableBody");
-        final String tableFoot = _foot(data, DisplayType.CLASS, package: package, clazz: clazz);
+        final String tableFoot =
+            _foot(data, DisplayType.CLASS, package: package, clazz: clazz);
         _logger.d("Table foot generated:\n$tableFoot");
-        final String breadcrumbs = _breadcrumb(DisplayType.CLASS, package: package, clazz: clazz);
+        final String breadcrumbs =
+            _breadcrumb(DisplayType.CLASS, package: package, clazz: clazz);
         _logger.d("Breadcrumbs generated:\n$breadcrumbs");
 
         // replace table tags
@@ -175,7 +193,8 @@ class HtmlReporter extends Reporter {
         _logger.d("Report [${package}] HTML page generated");
 
         // create class site
-        final File f = File(p.join(classesDir.path, '${package.replaceAll(p.separator, '.')}.$clazz.html'));
+        final File f = File(p.join(classesDir.path,
+            '${package.replaceAll(p.separator, '.')}.$clazz.html'));
         _logger.d("Saving report site [${f.path}]");
         await f.writeAsString(template);
         _logger.d("Report site [$clazz] saved");
@@ -192,7 +211,8 @@ class HtmlReporter extends Reporter {
       for (final clazz in data.packages[package].classes.keys) {
         _logger.d("Parsing report [${clazz}]");
         String template = await getHtmlTemplate(HTML_SOURCE_REPORT_TEMPLATE);
-        String templateCoverage = _sourceCoverageStylesheet(data.packages[package].classes[clazz]);
+        String templateCoverage =
+            _sourceCoverageStylesheet(data.packages[package].classes[clazz]);
 
         _logger.d('Reading source file [${clazz}]...');
         _logger.d('Reading source file [${root}]');
@@ -201,13 +221,17 @@ class HtmlReporter extends Reporter {
           path = root.substring(0, root.length - 4);
         }
         final File sourceFile = File(p.join(path, package, clazz));
-        final String sourceCode = await sourceFile.readAsString(encoding: Encoding.getByName('utf-8'));
+        final String sourceCode = await sourceFile.readAsString(
+            encoding: Encoding.getByName('utf-8'));
         _logger.d('Generating HTML from source code...');
-        final String source = _body(null, DisplayType.SOURCE, sourceCode: sourceCode);
+        final String source =
+            _body(null, DisplayType.SOURCE, sourceCode: sourceCode);
         _logger.d('Source code generated');
-        final String headLinks = _placeHeadLink(DisplayType.SOURCE, '${package.replaceAll(p.separator, '.')}.$clazz');
+        final String headLinks = _placeHeadLink(DisplayType.SOURCE,
+            '${package.replaceAll(p.separator, '.')}.$clazz');
         _logger.d("Index head link generated:\n$headLinks");
-        final String breadcrumbs = _breadcrumb(DisplayType.SOURCE, package: package, clazz: clazz);
+        final String breadcrumbs =
+            _breadcrumb(DisplayType.SOURCE, package: package, clazz: clazz);
         _logger.d("Breadcrumbs generated:\n$breadcrumbs");
 
         // replace table tags
@@ -217,12 +241,14 @@ class HtmlReporter extends Reporter {
         _logger.d("Report [${clazz}] HTML page generated");
 
         // create package site
-        final File f = File(p.join(sourcesDir.path, '${package.replaceAll(p.separator, '.')}.$clazz.html'));
+        final File f = File(p.join(sourcesDir.path,
+            '${package.replaceAll(p.separator, '.')}.$clazz.html'));
         _logger.d("Saving report site [${f.path}]");
         await f.writeAsString(template);
         _logger.d("Report site [$clazz] saved");
         // create class stylesheet for coverage
-        final File f1 = File(p.join(sourcesDir.path, '${package.replaceAll(p.separator, '.')}.$clazz.css'));
+        final File f1 = File(p.join(sourcesDir.path,
+            '${package.replaceAll(p.separator, '.')}.$clazz.css'));
         await f1.writeAsString(templateCoverage);
       }
     }
@@ -277,15 +303,18 @@ class HtmlReporter extends Reporter {
     } else {
       String buffer = '';
       for (final rune in line.runes) {
-        final ch = new String.fromCharCode(rune);
+        final ch = String.fromCharCode(rune);
 
         // check if ch indicates start/end of string
-        if (STRING_IDENTIFIERS.contains(ch) || _bufferContains(buffer, STRING_IDENTIFIERS)) {
+        if (STRING_IDENTIFIERS.contains(ch) ||
+            _bufferContains(buffer, STRING_IDENTIFIERS)) {
           // check if start of the string
-          if (STRING_IDENTIFIERS.contains(ch) && (buffer.isEmpty || !STRING_IDENTIFIERS.contains(buffer[0]))) {
+          if (STRING_IDENTIFIERS.contains(ch) &&
+              (buffer.isEmpty || !STRING_IDENTIFIERS.contains(buffer[0]))) {
             html += _wrapInSpan('pln', buffer);
             buffer = ch;
-          } else if (STRING_IDENTIFIERS.contains(buffer[0]) && ch == buffer[0]) {
+          } else if (STRING_IDENTIFIERS.contains(buffer[0]) &&
+              ch == buffer[0]) {
             buffer += ch;
             html += _wrapInSpan('str', buffer);
             buffer = '';
@@ -327,7 +356,7 @@ class HtmlReporter extends Reporter {
           continue;
         }
       }
-      if (buffer.length != 0) {
+      if (buffer.isNotEmpty) {
         html += _wrapInSpan('pln', buffer);
       }
     }
@@ -335,7 +364,8 @@ class HtmlReporter extends Reporter {
     return html;
   }
 
-  String _checkInKeywords(final String buffer, final List<String> kwds, final String style) {
+  String _checkInKeywords(
+      final String buffer, final List<String> kwds, final String style) {
     String copy = '$buffer';
     String html = '';
     for (final kwd in kwds) {
@@ -386,11 +416,14 @@ class HtmlReporter extends Reporter {
 
       final String headLinks = _placeHeadLink(DisplayType.PACKAGE);
       _logger.d("Index head link generated:\n$headLinks");
-      final String tableBody = _body(data, DisplayType.PACKAGE, package: package);
+      final String tableBody =
+          _body(data, DisplayType.PACKAGE, package: package);
       _logger.d("Table body generated:\n$tableBody");
-      final String tableFoot = _foot(data, DisplayType.PACKAGE, package: package);
+      final String tableFoot =
+          _foot(data, DisplayType.PACKAGE, package: package);
       _logger.d("Table foot generated:\n$tableFoot");
-      final String breadcrumbs = _breadcrumb(DisplayType.PACKAGE, package: package);
+      final String breadcrumbs =
+          _breadcrumb(DisplayType.PACKAGE, package: package);
       _logger.d("Breadcrumbs generated:\n$breadcrumbs");
 
       // replace table tags
@@ -401,14 +434,16 @@ class HtmlReporter extends Reporter {
       _logger.d("Report [${package}] HTML page generated");
 
       // create package site
-      final File f = File(p.join(packagesDir.path, '${package.replaceAll(p.separator, '.')}.html'));
+      final File f = File(p.join(
+          packagesDir.path, '${package.replaceAll(p.separator, '.')}.html'));
       _logger.d("Saving report site [${f.path}]");
       await f.writeAsString(template);
       _logger.d("Report site [${package}] saved");
     }
   }
 
-  String _breadcrumb(final DisplayType type, {final String package, final String clazz}) {
+  String _breadcrumb(final DisplayType type,
+      {final String package, final String clazz}) {
     String breadcrumb = '';
 
     switch (type) {
@@ -459,18 +494,24 @@ class HtmlReporter extends Reporter {
     return breadcrumb;
   }
 
-  String _foot(final ReportData data, final DisplayType type, {final String package, final String clazz}) {
+  String _foot(final ReportData data, final DisplayType type,
+      {final String package, final String clazz}) {
     String foot;
     switch (type) {
       case DisplayType.ROOT:
         {
           int coveredLinesPrc = 0;
           if (data.summary.linesTotal > 0) {
-            coveredLinesPrc = ((data.summary.linesCovered / data.summary.linesTotal) * 100).toInt();
+            coveredLinesPrc =
+                ((data.summary.linesCovered / data.summary.linesTotal) * 100)
+                    .toInt();
           }
           int coveredBranchesPrc = 0;
           if (data.summary.branchesTotal > 0) {
-            coveredBranchesPrc = ((data.summary.branchesCovered / data.summary.branchesTotal) * 100).toInt();
+            coveredBranchesPrc =
+                ((data.summary.branchesCovered / data.summary.branchesTotal) *
+                        100)
+                    .toInt();
           }
           foot = '''
   <tr>
@@ -490,11 +531,16 @@ class HtmlReporter extends Reporter {
           final packageData = data.packages[package];
           int coveredLinesPrc = 0;
           if (packageData.linesTotal > 0) {
-            coveredLinesPrc = ((packageData.linesCovered / packageData.linesTotal) * 100).toInt();
+            coveredLinesPrc =
+                ((packageData.linesCovered / packageData.linesTotal) * 100)
+                    .toInt();
           }
           int coveredBranchesPrc = 0;
           if (packageData.branchesTotal > 0) {
-            coveredBranchesPrc = ((packageData.branchesCovered / data.packages[package].branchesTotal) * 100).toInt();
+            coveredBranchesPrc = ((packageData.branchesCovered /
+                        data.packages[package].branchesTotal) *
+                    100)
+                .toInt();
           }
           foot = '''
   <tr>
@@ -514,11 +560,14 @@ class HtmlReporter extends Reporter {
           final classData = data.packages[package].classes[clazz];
           int coveredLinesPrc = 0;
           if (classData.linesTotal > 0) {
-            coveredLinesPrc = ((classData.linesCovered / classData.linesTotal) * 100).toInt();
+            coveredLinesPrc =
+                ((classData.linesCovered / classData.linesTotal) * 100).toInt();
           }
           int coveredBranchesPrc = 0;
           if (classData.branchesTotal > 0) {
-            coveredBranchesPrc = ((classData.branchesCovered / classData.branchesTotal) * 100).toInt();
+            coveredBranchesPrc =
+                ((classData.branchesCovered / classData.branchesTotal) * 100)
+                    .toInt();
           }
           foot = '''
   <tr>
@@ -539,23 +588,30 @@ class HtmlReporter extends Reporter {
     return foot;
   }
 
-  String _body(final ReportData data, final DisplayType type, {final String package, final String clazz, final String sourceCode}) {
+  String _body(final ReportData data, final DisplayType type,
+      {final String package, final String clazz, final String sourceCode}) {
     String body = '';
 
     switch (type) {
       case DisplayType.ROOT:
         {
           for (final package in data.packages.keys) {
-            final id = data.packages.keys.toList(growable: false).indexOf(package);
+            final id =
+                data.packages.keys.toList(growable: false).indexOf(package);
             final packageName = package.replaceAll(p.separator, '.');
             final packageData = data.packages[package];
             int coveredLinesPrc = 0;
             if (packageData.linesTotal > 0) {
-              coveredLinesPrc = ((packageData.linesCovered / packageData.linesTotal) * 100).toInt();
+              coveredLinesPrc =
+                  ((packageData.linesCovered / packageData.linesTotal) * 100)
+                      .toInt();
             }
             int coveredBranchesPrc = 0;
             if (packageData.branchesTotal > 0) {
-              coveredBranchesPrc = ((packageData.branchesCovered / packageData.branchesTotal) * 100).toInt();
+              coveredBranchesPrc =
+                  ((packageData.branchesCovered / packageData.branchesTotal) *
+                          100)
+                      .toInt();
             }
 
             body += '''
@@ -578,14 +634,20 @@ class HtmlReporter extends Reporter {
         {
           for (final clazz in data.packages[package].classes.keys) {
             final clazzData = data.packages[package].classes[clazz];
-            final id = data.packages[package].classes.keys.toList(growable: false).indexOf(clazz);
+            final id = data.packages[package].classes.keys
+                .toList(growable: false)
+                .indexOf(clazz);
             int coveredLinesPrc = 0;
             if (clazzData.linesTotal > 0) {
-              coveredLinesPrc = ((clazzData.linesCovered / clazzData.linesTotal) * 100).toInt();
+              coveredLinesPrc =
+                  ((clazzData.linesCovered / clazzData.linesTotal) * 100)
+                      .toInt();
             }
             int coveredBranchesPrc = 0;
             if (clazzData.branchesTotal > 0) {
-              coveredBranchesPrc = ((clazzData.branchesCovered / clazzData.branchesTotal) * 100).toInt();
+              coveredBranchesPrc =
+                  ((clazzData.branchesCovered / clazzData.branchesTotal) * 100)
+                      .toInt();
             }
             body += '''
   <tr>
@@ -605,9 +667,13 @@ class HtmlReporter extends Reporter {
         }
       case DisplayType.CLASS:
         {
-          for (final method in data.packages[package].classes[clazz].methods.keys) {
-            final methodData = data.packages[package].classes[clazz].methods[method];
-            final id = data.packages[package].classes[clazz].methods.keys.toList(growable: false).indexOf(method);
+          for (final method
+              in data.packages[package].classes[clazz].methods.keys) {
+            final methodData =
+                data.packages[package].classes[clazz].methods[method];
+            final id = data.packages[package].classes[clazz].methods.keys
+                .toList(growable: false)
+                .indexOf(method);
             // TODO: coverage of the method is not provided in the report data
             body += '''
   <tr>
@@ -641,7 +707,8 @@ class HtmlReporter extends Reporter {
     return body;
   }
 
-  String _getCoverageBarData(final String id, final DisplayType type, final int coveragePrc) {
+  String _getCoverageBarData(
+      final String id, final DisplayType type, final int coveragePrc) {
     String body = '';
     String resourcePrefix = 'resources';
     if (type != DisplayType.ROOT) {

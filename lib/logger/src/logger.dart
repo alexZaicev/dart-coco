@@ -11,7 +11,12 @@ class Logger {
     LogLevel.ERROR: [LogLevel.ERROR],
     LogLevel.WARN: [LogLevel.ERROR, LogLevel.WARN],
     LogLevel.INFO: [LogLevel.ERROR, LogLevel.WARN, LogLevel.INFO],
-    LogLevel.DEBUG: [LogLevel.ERROR, LogLevel.WARN, LogLevel.INFO, LogLevel.DEBUG],
+    LogLevel.DEBUG: [
+      LogLevel.ERROR,
+      LogLevel.WARN,
+      LogLevel.INFO,
+      LogLevel.DEBUG
+    ],
   };
 
   Logger(final String tag) {
@@ -35,7 +40,9 @@ class Logger {
   }
 
   void _print(final LogLevel lvl, final String msg) {
-    if (_allowed[logLevel].contains(lvl)) print('${_timestamp()}\t --- [${EnumToString.parse(lvl)}] --- [$_tag] --- $msg');
+    if (_allowed[logLevel].contains(lvl))
+      print(
+          '${_timestamp()}\t --- [${EnumToString.parse(lvl)}] --- [$_tag] --- $msg');
   }
 
   String _timestamp() {
