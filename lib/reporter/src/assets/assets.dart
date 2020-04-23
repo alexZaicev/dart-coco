@@ -14,14 +14,17 @@ class Assets {
 
   static String getResource(final String name) {
     if (!_assetResources.containsKey(name)) {
-      throw new ArgumentError('Resource [$name] in not present in dart-coco available asset set');
+      throw new ArgumentError(
+          'Resource [$name] in not present in dart-coco available asset set');
     }
     return _assetResources[name];
   }
 
-  static List<String> getAvailableResources() => _assetResources.keys.toList(growable: false);
+  static List<String> getAvailableResources() =>
+      _assetResources.keys.toList(growable: false);
 
   static String getReportTemplate() => getResource('report_template.html');
 
-  static String getReportSourceTemplate() => getResource('report_source_template.html');
+  static String getReportSourceTemplate() =>
+      getResource('report_source_template.html');
 }
