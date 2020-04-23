@@ -10,7 +10,7 @@ Dart-CoCo for [Dart](https://www.dartlang.org/) is a simple command line utility
 In `pubspec.yaml` add a development dependency:
 ```
 dev-dependencies:
-    dart_coco: ^1.0.5
+    dart_coco: ^1.0.6
 ```
 
 From command line execute:

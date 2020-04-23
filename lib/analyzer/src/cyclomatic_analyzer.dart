@@ -23,7 +23,8 @@ class CyclomaticAnalysisRecorder extends AnalysisRecorder {
   @override
   void startRecordGroup(String groupName) {
     if (_hasStartedGroup) {
-      throw StateError('Cannot start a group while another one is started. Use `endRecordGroup` to close the opened one.');
+      throw StateError(
+          'Cannot start a group while another one is started. Use `endRecordGroup` to close the opened one.');
     }
     if (groupName == null) {
       throw ArgumentError.notNull('groupName');
@@ -43,7 +44,8 @@ class CyclomaticAnalysisRecorder extends AnalysisRecorder {
   @override
   void record(final String recordName, final dynamic value) {
     if (!_hasStartedGroup) {
-      throw StateError('No record groups have been started. Use `startRecordGroup` before `record`');
+      throw StateError(
+          'No record groups have been started. Use `startRecordGroup` before `record`');
     }
     if (recordName == null) {
       throw ArgumentError.notNull('recordName');
@@ -68,7 +70,8 @@ class CyclomaticAnalyzer extends Analyzer<CyclomaticAnalysisRecorder> {
   }
 
   BuiltList<ScopedDeclaration> _getDeclarations(String filePath) {
-    final compUnit = parseFile(path: filePath, featureSet: FeatureSet.fromEnableFlags([]));
+    final compUnit =
+        parseFile(path: filePath, featureSet: FeatureSet.fromEnableFlags([]));
     final callableVisitor = CallableAstVisitor();
     compUnit.unit.visitChildren(callableVisitor);
     return callableVisitor.declarations;
@@ -89,7 +92,11 @@ class CyclomaticAnalyzer extends Analyzer<CyclomaticAnalysisRecorder> {
   }
 
   void _recordDeclarationNamesFor(Iterable<ScopedDeclaration> declarations) {
-    _recorder.record('callables', declarations.map((ScopedDeclaration dec) => _getQualifiedName(dec)).toList(growable: false));
+    _recorder.record(
+        'callables',
+        declarations
+            .map((ScopedDeclaration dec) => _getQualifiedName(dec))
+            .toList(growable: false));
   }
 
   void _recordDeclarationComplexity(ScopedDeclaration dec, int complexity) {
@@ -112,7 +119,8 @@ class CyclomaticAnalyzer extends Analyzer<CyclomaticAnalysisRecorder> {
 }
 
 class CyclomaticAnalysisRunner extends AnalysisRunner {
-  CyclomaticAnalysisRunner(final AnalysisRecorder recorder, final Analyzer analyzer, final List<String> filePaths)
+  CyclomaticAnalysisRunner(final AnalysisRecorder recorder,
+      final Analyzer analyzer, final List<String> filePaths)
       : super(recorder, analyzer, filePaths);
 
   @override
@@ -137,7 +145,8 @@ class CyclomaticAnalysisRunner extends AnalysisRunner {
           final String method = callable.split('.').last;
           methods[method] = AnalysisMethod(complexity: data[file][callable]);
         }
-        final fullName = p.join('lib', file.replaceAll('$root${p.separator}', ''));
+        final fullName =
+            p.join('lib', file.replaceAll('$root${p.separator}', ''));
         final clazz = fullName.split(p.separator).last;
         String package = fullName.replaceAll('${p.separator}$clazz', '');
         // check if some files are in root
@@ -146,8 +155,10 @@ class CyclomaticAnalysisRunner extends AnalysisRunner {
           package = 'lib';
         }
 
-        packages[package] ??= AnalysisPackage(classes: <String, AnalysisFile>{});
-        packages[package].classes[clazz] = AnalysisFile(complexity: complexity, methods: methods);
+        packages[package] ??=
+            AnalysisPackage(classes: <String, AnalysisFile>{});
+        packages[package].classes[clazz] =
+            AnalysisFile(complexity: complexity, methods: methods);
         packages[package].complexity += complexity;
       }
     }
@@ -156,7 +167,10 @@ class CyclomaticAnalysisRunner extends AnalysisRunner {
     for (final p in packages.values.toList(growable: false)) {
       summary.complexity += p.complexity;
     }
-    return AnalysisData(timestamp: DateTime.now().toUtc().toIso8601String(), summary: summary, packages: packages);
+    return AnalysisData(
+        timestamp: DateTime.now().toUtc().toIso8601String(),
+        summary: summary,
+        packages: packages);
   }
 }
 

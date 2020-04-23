@@ -53,11 +53,15 @@ Future main() async {
     });
 
     test('Function found', () {
-      expect(callableVisitor.declarations.where(_functionDeclarationFilter).length, greaterThan(0));
+      expect(
+          callableVisitor.declarations.where(_functionDeclarationFilter).length,
+          greaterThan(0));
     });
 
     test('Method found', () {
-      expect(callableVisitor.declarations.where(_methodDeclarationFilter).length, greaterThan(0));
+      expect(
+          callableVisitor.declarations.where(_methodDeclarationFilter).length,
+          greaterThan(0));
     });
 
     test('Method found', () {

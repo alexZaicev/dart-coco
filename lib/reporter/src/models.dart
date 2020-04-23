@@ -140,7 +140,12 @@ class ReportMethod implements Serializable<ReportMethod> {
 }
 
 class ReportSummary implements Serializable<ReportSummary> {
-  ReportSummary({this.complexity = 0, this.linesTotal = 0, this.linesCovered = 0, this.branchesTotal = 0, this.branchesCovered = 0});
+  ReportSummary(
+      {this.complexity = 0,
+      this.linesTotal = 0,
+      this.linesCovered = 0,
+      this.branchesTotal = 0,
+      this.branchesCovered = 0});
 
   int complexity;
   int linesTotal;
