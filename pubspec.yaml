@@ -1,0 +1,32 @@
+name: dart_coco
+version: 2.0.1
+
+homepage: https://github.com/alexZaicev/dart-coco
+
+documentation: https://github.com/alexZaicev/dart-coco
+
+description:
+  Dart-coco is a simple command line utility providing insights into qulity of the code and generating coverage
+  reports from LCOV file
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  analyzer: ^0.39.7
+  built_collection: ^4.3.2
+  glob: ^1.2.0
+  path: ^1.6.4
+  html: ^0.14.0+3
+  args: ^1.5.2
+  resource: ^2.1.6
+  intl: ^0.16.0
+  enum_to_string: ^1.0.9
+
+dev_dependencies:
+  test: ^1.14.2
+  test_coverage: ^0.4.1
+  mockito: ^4.1.1
+
+executables:
+  dart_coco: dart_coco
