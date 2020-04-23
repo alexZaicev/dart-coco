@@ -12,11 +12,18 @@ final String DEFAULT_LCOV = 'coverage${p.separator}lcov.info';
 
 Future<void> main(List<String> args) async {
   final parser = ArgParser();
-  parser.addOption('output', abbr: 'o', defaultsTo: DEFAULT_OUT, help: 'Generated report output location');
-  parser.addOption('root', abbr: 'r', defaultsTo: DEFAULT_ROOT, help: 'Root path from which all dart files will be analyzed');
+  parser.addOption('output',
+      abbr: 'o',
+      defaultsTo: DEFAULT_OUT,
+      help: 'Generated report output location');
+  parser.addOption('root',
+      abbr: 'r',
+      defaultsTo: DEFAULT_ROOT,
+      help: 'Root path from which all dart files will be analyzed');
   parser.addOption('lcov',
       defaultsTo: DEFAULT_LCOV,
-      help: 'Path to [lcov.info] file. If file is provided, report will include coverage data collected inside LCOV file');
+      help:
+          'Path to [lcov.info] file. If file is provided, report will include coverage data collected inside LCOV file');
   parser.addFlag('verbose', abbr: 'v', help: 'Enable debug logging');
   parser.addFlag('help', abbr: 'h', help: 'Print out help page for Dart-CoCo');
   parser.addFlag('html', help: 'HTML report format');
@@ -24,14 +31,16 @@ Future<void> main(List<String> args) async {
 
   try {
     var arguments = parser.parse(args);
-    Logger.logLevel = arguments.wasParsed('verbose') ? LogLevel.DEBUG : LogLevel.INFO;
+    Logger.logLevel =
+        arguments.wasParsed('verbose') ? LogLevel.DEBUG : LogLevel.INFO;
 
     if (arguments.wasParsed('help')) {
       _help(parser);
       return;
     }
     if (!arguments.wasParsed('html') && !arguments.wasParsed('json')) {
-      _logger.e('Report format not provided. Please see help page (-h) for more details');
+      _logger.e(
+          'Report format not provided. Please see help page (-h) for more details');
       exit(1);
     }
     await _run(arguments);
@@ -48,7 +57,8 @@ Future<void> _run(final ArgResults args) async {
   final out = _createOutputDir(args['output']);
 
   // get all dart files in analysis root
-  final dartFiles = Glob('**.dart').listSync(root: args['root'], followLinks: false);
+  final dartFiles =
+      Glob('**.dart').listSync(root: args['root'], followLinks: false);
   dartFiles.removeWhere((FileSystemEntity entity) {
     if (entity is! File) return true;
     if (entity is File) {
@@ -60,8 +70,11 @@ Future<void> _run(final ArgResults args) async {
   });
 
   // run cyclomatic analysis tool
-  final dartFilePaths = dartFiles.map((FileSystemEntity entity) => entity.path).toList(growable: false);
-  CyclomaticAnalysisRunner runner = CyclomaticAnalysisRunner(CyclomaticAnalysisRecorder(), CyclomaticAnalyzer(), dartFilePaths);
+  final dartFilePaths = dartFiles
+      .map((FileSystemEntity entity) => entity.path)
+      .toList(growable: false);
+  CyclomaticAnalysisRunner runner = CyclomaticAnalysisRunner(
+      CyclomaticAnalysisRecorder(), CyclomaticAnalyzer(), dartFilePaths);
   runner.run();
   final AnalysisData analysisData = runner.getResults(args['root']);
 
@@ -75,7 +88,8 @@ Future<void> _run(final ArgResults args) async {
     lcovData = await lcovParser.convert(lcov);
   }
 
-  final ReportData reportData = Reporter.generateReportData(analysisData, lcovData);
+  final ReportData reportData =
+      Reporter.generateReportData(analysisData, lcovData);
 
   // run HTML reporter
   if (args.wasParsed('html')) {
@@ -103,7 +117,8 @@ Directory _createOutputDir(final String output) {
 Future<String> _readFile(final String lcovPath) {
   final lcov = File(lcovPath);
   if (!lcov.existsSync()) {
-    throw FileSystemException("Lcov data file not found in provided path", lcovPath);
+    throw FileSystemException(
+        "Lcov data file not found in provided path", lcovPath);
   }
   _logger.i('Parsing LCOV file [$lcovPath]');
   return lcov.readAsString();

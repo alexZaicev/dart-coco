@@ -3,8 +3,7 @@ part of dart_coco.analyzer;
 class CyclomaticAnalysisRecorder extends AnalysisRecorder {
   Map<String, dynamic> _activeRecordGroup;
 
-  bool get _hasStartedGroup =>
-      _activeRecordGroup != null;
+  bool get _hasStartedGroup => _activeRecordGroup != null;
 
   final List<Map<String, dynamic>> _records;
 
