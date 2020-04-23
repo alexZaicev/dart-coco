@@ -4,7 +4,7 @@ class CyclomaticAnalysisRecorder extends AnalysisRecorder {
   Map<String, dynamic> _activeRecordGroup;
 
   bool get _hasStartedGroup =>
-      _activeRecordGroup != null && _activeRecordGroup.isNotEmpty;
+      _activeRecordGroup != null;
 
   final List<Map<String, dynamic>> _records;
 
@@ -37,7 +37,7 @@ class CyclomaticAnalysisRecorder extends AnalysisRecorder {
 
   @override
   void endRecordGroup() {
-    _activeRecordGroup.clear();
+    _activeRecordGroup = null;
   }
 
   @override

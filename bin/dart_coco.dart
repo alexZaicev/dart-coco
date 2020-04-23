@@ -103,7 +103,7 @@ Directory _createOutputDir(final String output) {
 Future<String> _readFile(final String lcovPath) {
   final lcov = File(lcovPath);
   if (!lcov.existsSync()) {
-    throw FileSystemException("Lcov data file not found in provided path [$lcovPath]");
+    throw FileSystemException("Lcov data file not found in provided path", lcovPath);
   }
   _logger.i('Parsing LCOV file [$lcovPath]');
   return lcov.readAsString();
