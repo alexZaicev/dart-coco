@@ -33,11 +33,11 @@ dart bin/dart_coco.dart --html -r path/to/lib -o report --lcov path/to/lcov.info
 
 Report index.html page: 
 
-![Index Report Page](docs/index.png)
+![Index Report Page](doc/index.png)
 
 Coverage report collected from LCOV:
 
-![Coverage Report Page](docs/coverage_report.png)
+![Coverage Report Page](doc/coverage_report.png)
 
 ## Options
 
