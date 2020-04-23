@@ -1,8 +1,15 @@
+## 1.0.5
+
+- Resolving resource asset creation
+
+## 1.0.4+1
+
+- Fixed `startRecordState` issue
+
 ## 1.0.4
 
 - Removing unnecessary `new` keywords
 - Dart code formatting
-- Fixed `startRecordState` issue
 
 ## 1.0.3
 
