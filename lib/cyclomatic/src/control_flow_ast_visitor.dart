@@ -1,29 +1,14 @@
 part of dart_coco.cyclomatic;
 
-/**
- * Visitor implementation to calculate the cyclomatic complexity
- * of a [Declaration]
- */
 class ControlFlowVisitor extends RecursiveAstVisitor<Object> {
-  /**
-   * Complexity of each `Declaration`
-   */
   int _complexity = 1;
 
-  /**
-   * Complexity of a [Declaration]
-   */
   int get complexity => _complexity;
 
   final CyclomaticConfig config;
 
   ControlFlowVisitor(this.config);
 
-  /**
-   * Increases an internal counter that represent the complexity of the
-   * function/method
-   * Use [complexity] to read the complexity of a given [Declaration]
-   */
   void increaseComplexity(String configOptionToConsider) {
     if (!CYCLOMATIC_CONFIG_OPTIONS.contains(configOptionToConsider)) {
       throw new ArgumentError.value(configOptionToConsider);

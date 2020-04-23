@@ -1,8 +1,8 @@
 part of dart_coco.cyclomatic;
 
-/**
- * Available options in CyclomaticConfig
- */
+///
+/// Available options in CyclomaticConfig
+///
 const List<String> CYCLOMATIC_CONFIG_OPTIONS = const [
   'assertStatement',
   'blockFunctionBody',
@@ -17,9 +17,9 @@ const List<String> CYCLOMATIC_CONFIG_OPTIONS = const [
   'yieldStatement'
 ];
 
-/**
- * Configuration for Cyclomatic Complexity calculation
- */
+///
+/// Configuration for Cyclomatic Complexity calculation
+///
 class CyclomaticConfig {
   final BuiltMap<String, int> addedComplexityByControlFlowType;
 
@@ -131,13 +131,13 @@ class CyclomaticConfigBuilder {
   }
 }
 
-/**
- * Configuration for Cyclomatic Complexity analysis that is very strict
- * and increases method complexity for _every_ known control flow statement
- *
- * See [CYCLOMATIC_CONFIG_OPTIONS] for a full list of statements that increase
- * complexity.
- */
+///
+/// Configuration for Cyclomatic Complexity analysis that is very strict
+/// and increases method complexity for _every_ known control flow statement
+///
+/// See [CYCLOMATIC_CONFIG_OPTIONS] for a full list of statements that increase
+/// complexity.
+///
 final CyclomaticConfig DEFAULT_CYCLOMATIC_CONFIG = () {
   CyclomaticConfigBuilder builder = CyclomaticConfig.getBuilder()
     ..useAssertStatement()

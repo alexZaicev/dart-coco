@@ -9,7 +9,5 @@ class ParserError implements Exception {
 }
 
 abstract class Serializable<T> {
-
   Map<String, dynamic> toMap();
-
 }

@@ -1,17 +1,17 @@
 part of dart_coco.analyzer;
 
 class CyclomaticAnalysisRecorder extends AnalysisRecorder {
-  Map<String, dynamic> _activeRecordGroup = null;
+  Map<String, dynamic> _activeRecordGroup;
 
-  bool get _hasStartedGroup => _activeRecordGroup != null;
+  bool get _hasStartedGroup => _activeRecordGroup != null && _activeRecordGroup.isNotEmpty;
 
   final List<Map<String, dynamic>> _records;
 
-  CyclomaticAnalysisRecorder() : _records = new List<Map<String, dynamic>>();
+  CyclomaticAnalysisRecorder() : _records = List<Map<String, dynamic>>();
 
   @override
   bool canRecord(String recordName) {
-    // let's not limit what kind of records can be recorded
+    // records everything
     return true;
   }
 
@@ -28,14 +28,14 @@ class CyclomaticAnalysisRecorder extends AnalysisRecorder {
     if (groupName == null) {
       throw new ArgumentError.notNull('groupName');
     }
-    Map<String, dynamic> recordGroup = new Map<String, dynamic>();
+    Map<String, dynamic> recordGroup = Map<String, dynamic>();
     _records.add({groupName: recordGroup});
     _activeRecordGroup = recordGroup;
   }
 
   @override
   void endRecordGroup() {
-    _activeRecordGroup = null;
+    _activeRecordGroup.clear();
   }
 
   @override
@@ -66,22 +66,22 @@ class CyclomaticAnalyzer extends Analyzer<CyclomaticAnalysisRecorder> {
   }
 
   BuiltList<ScopedDeclaration> _getDeclarations(String filePath) {
-    var compUnit = parseFile(path: filePath, featureSet: FeatureSet.fromEnableFlags([]));
-    var callableVisitor = new CallableAstVisitor();
+    final compUnit = parseFile(path: filePath, featureSet: FeatureSet.fromEnableFlags([]));
+    final callableVisitor = CallableAstVisitor();
     compUnit.unit.visitChildren(callableVisitor);
     return callableVisitor.declarations;
   }
 
   void _runComplexityAnalysisFor(BuiltList<ScopedDeclaration> declarations) {
     for (ScopedDeclaration dec in declarations) {
-      var controlFlowVisitor = _visitDeclaration(dec.declaration);
-      int complexity = _getCyclomaticComplexity(controlFlowVisitor);
+      final controlFlowVisitor = _visitDeclaration(dec.declaration);
+      final complexity = _getCyclomaticComplexity(controlFlowVisitor);
       _recordDeclarationComplexity(dec, complexity);
     }
   }
 
   ControlFlowVisitor _visitDeclaration(Declaration dec) {
-    var controlFlowVisitor = ControlFlowVisitor(DEFAULT_CYCLOMATIC_CONFIG);
+    final controlFlowVisitor = ControlFlowVisitor(DEFAULT_CYCLOMATIC_CONFIG);
     dec.visitChildren(controlFlowVisitor);
     return controlFlowVisitor;
   }
