@@ -10,7 +10,7 @@ Dart-CoCo for [Dart](https://www.dartlang.org/) is a simple command line utility
 In `pubspec.yaml` add a development dependency:
 ```
 dev-dependencies:
-    dart_coco: ^1.0.1
+    dart_coco: ^1.0.5
 ```
 
 From command line execute:
@@ -19,7 +19,7 @@ flutter pub run dart_coco --html
 ```
 If you run `flutter test --coverage` before executing Dart-CoCo, tool will include coverage data gathered inside `coverage/lcov.info`
 
-#####Directly from GitHub clone:
+#### Directly from GitHub clone:
 
 ```
 git clone https://github.com/alexZaicev/dart-coco.git
@@ -28,6 +28,16 @@ pub get
 
 dart bin/dart_coco.dart --html -r path/to/lib -o report --lcov path/to/lcov.info
 ```
+
+## Report example
+
+Report index.html page: 
+
+![Index Report Page](docs/index.png)
+
+Coverage report collected from LCOV:
+
+![Coverage Report Page](docs/coverage_report.png)
 
 ## Options
 
