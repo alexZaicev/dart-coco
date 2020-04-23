@@ -2,6 +2,7 @@
 
 - Removing unnecessary `new` keywords
 - Dart code formatting
+- Fixed `startRecordState` issue
 
 ## 1.0.3
 
