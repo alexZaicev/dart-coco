@@ -1,3 +1,8 @@
+## 1.0.3
+
+- Removing unnecessary `new` keywords
+- Dart code formatting
+
 ## 1.0.2
 
 - Removing unnecessary `new` keywords
