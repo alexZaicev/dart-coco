@@ -1,8 +1,7 @@
 part of dart_coco.reporter;
 
 abstract class Reporter {
-  static final _logger = Logger('Reporter');
-  static String PROJECT_ROOT = null;
+  static String PROJECT_ROOT;
 
   String get projectRoot {
     if (PROJECT_ROOT == null) {

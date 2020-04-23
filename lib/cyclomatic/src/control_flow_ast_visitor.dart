@@ -12,7 +12,7 @@ class ControlFlowVisitor extends RecursiveAstVisitor<Object> {
   void increaseComplexity(String configOptionToConsider) {
     if (!CyclomaticConfig.CYCLOMATIC_CONFIG_OPTIONS
         .contains(configOptionToConsider)) {
-      throw new ArgumentError.value(configOptionToConsider);
+      throw ArgumentError.value(configOptionToConsider);
     }
     _complexity +=
         config.addedComplexityByControlFlowType[configOptionToConsider];

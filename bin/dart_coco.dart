@@ -11,7 +11,7 @@ const String DEFAULT_OUT = 'report';
 final String DEFAULT_LCOV = 'coverage${p.separator}lcov.info';
 
 Future<void> main(List<String> args) async {
-  var parser = new ArgParser();
+  final parser = ArgParser();
   parser.addOption('output', abbr: 'o', defaultsTo: DEFAULT_OUT, help: 'Generated report output location');
   parser.addOption('root', abbr: 'r', defaultsTo: DEFAULT_ROOT, help: 'Root path from which all dart files will be analyzed');
   parser.addOption('lcov',

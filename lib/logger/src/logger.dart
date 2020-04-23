@@ -40,9 +40,10 @@ class Logger {
   }
 
   void _print(final LogLevel lvl, final String msg) {
-    if (_allowed[logLevel].contains(lvl))
+    if (_allowed[logLevel].contains(lvl)) {
       print(
           '${_timestamp()}\t --- [${EnumToString.parse(lvl)}] --- [$_tag] --- $msg');
+    }
   }
 
   String _timestamp() {

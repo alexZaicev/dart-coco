@@ -60,7 +60,7 @@ class CyclomaticAnalyzer extends Analyzer<CyclomaticAnalysisRecorder> {
   void runAnalysis(String filePath, CyclomaticAnalysisRecorder recorder) {
     _recorder = recorder;
     var declarations = _getDeclarations(filePath);
-    if (declarations.length > 0) {
+    if (declarations.isNotEmpty) {
       recorder.startRecordGroup(filePath);
       _recordDeclarationNamesFor(declarations);
       _runComplexityAnalysisFor(declarations);
